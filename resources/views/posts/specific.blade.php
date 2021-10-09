@@ -9,10 +9,13 @@
                 <h2>Description: {{$post->body}}</h2>
                 @auth
                    @if(Auth()->User()->id === $post->user_id)
-                        <form action="{{route("post.destroy", $post)}}" method="post" class="mr-1">
+                        <form action="{{route("post.destroy", $post)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500">Delete</button>
+                        </form>
+                        <form action="{{route("post.update", $post)}}" method="get">
+                            <button type="submit" class="attendant_kick">Update</button>
                         </form>
                     @endauth
                 @endauth

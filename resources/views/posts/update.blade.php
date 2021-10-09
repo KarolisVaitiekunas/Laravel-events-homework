@@ -5,11 +5,12 @@
     <div class="specificMain">
         <div class="auth_form_post">
             @auth
-                <form action="{{ route('posts') }}" method="post" class="mb-4" enctype="multipart/form-data">
+                <form action="{{route("post.update", $post)}}" method="post" class="mb-4" enctype="multipart/form-data">
                     @csrf
+                    @method('PATCH')
                     <div>
                         <label for="body" class="sr-only">title</label>
-                        <textarea name="title" id="title" cols="30" rows="1" placeholder="Enter event title"></textarea>
+                        <textarea name="title" id="title" cols="30" rows="1" placeholder="Enter event title">{{$post->title}}</textarea>
 
                         @error('body')
                         <div class="error">
@@ -20,7 +21,7 @@
 
                     <div>
                         <label for="body" class="sr-only">Body</label>
-                        <textarea name="body" id="body" cols="30" rows="4" placeholder="Enter event description"></textarea>
+                        <textarea name="body" id="body" cols="30" rows="4" placeholder="Enter event description">{{$post->body}}</textarea>
 
                         @error('body')
                         <div class="error">
@@ -30,12 +31,12 @@
                     </div>
 
                     <div>
-                        <input min="2000-01-01" max="2030-12-31" name="date" id="date" type="date"  placeholder="Date of birth"/>
+                        <input min="2000-01-01" max="2030-12-31" name="date" id="date" type="date" value="{{$post->date}}" placeholder="Date of birth"/>
                     </div>
 
                     <div>
                         <div>
-                            <input type="file" name="image" class="form-control">
+                            <input type="file" name="image">
                         </div>
                         @error('image')
                         <div class="error">
