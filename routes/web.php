@@ -36,6 +36,8 @@ Route::post("/posts", [PostsController::class, "store"])->name("posts");
 Route::get("/post/{post}", [PostController::class, "index"])->name("post");
 Route::post("/post/{post}", [PostController::class, "store"])->name("post.create");
 Route::delete("/post/{post}", [PostController::class, "destroy"])->name("post.destroy");
+Route::get("/post/edit/{post}", [PostController::class, "updateView"])->name("post.update");
+Route::patch("/post/edit/{post}", [PostController::class, "update"])->name("post.update");
 Route::delete("/post/{guest}/{post}", [PostController::class, "removeGuest"])->name("post.destroy.guest");
 //auth
 Route::get('/verify', [RegisterController::class, "verifyUser"])->name('verify.user');

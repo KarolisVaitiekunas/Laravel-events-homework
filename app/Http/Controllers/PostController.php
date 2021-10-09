@@ -125,4 +125,41 @@ class PostController extends Controller
         $post->save();
         return back();
     }
+
+    public function updateView(Post $post){
+        //dd($post->id);
+        return view('posts.update', [
+            'post'=>$post,
+        ]);
+    }
+
+    public function update(Request $request, Post $post){
+
+        if(!auth()->user()){
+            return redirect()->route("login");
+        }
+
+        if(!$post->ownedBy(auth()->user())){
+            return redirect()->route("home");
+        }
+
+
+        $this->validate($request, [
+            'body' => 'required',
+            'title'=>'required',
+            'date'=> 'required|date|date_format:Y-m-d|after:yesterday',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('images'), $imageName);
+
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->date = $request->date;
+        $post->image = $imageName;
+        $post->save();
+        return redirect()->route("home");
+    }
 }
